@@ -4,6 +4,9 @@ export default {
   getLoggedIn: function() {
     return axios.get('/api/logged_in');
   },
+  getProfile: function(id) {
+    return axios.get('/api/profile/' + id);
+  },
   login: function (data) {
     return axios.post('/api/login', data);
   },

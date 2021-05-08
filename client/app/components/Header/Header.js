@@ -7,11 +7,6 @@ const Header = (props) => {
   const { theme } = useContext(ThemeContext); 
   const { loggedIn, loginFunc, logoutFunc } = useContext(LoginContext);
 
-
-  const logout = () => {
-    logoutFunc();
-  }
-
   return (
     <nav className={`navbar navbar-expand-lg navbar-${theme} bg-${theme}`}>
       <div className="container-fluid">
@@ -33,7 +28,7 @@ const Header = (props) => {
                 <Link className="nav-link" to="#">Messages</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="#">Profile</Link>
+                <Link className="nav-link" to="/profile">Profile</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/" onClick={() => logoutFunc() }>Logout</Link>

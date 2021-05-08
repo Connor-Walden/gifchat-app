@@ -3,18 +3,25 @@ import ThemeContext from '../../utils/ThemeContext';
 import LoginContext from '../../utils/LoginContext';
 import API from '../../utils/API';
 
-import Header from '../Header/Header';
+import Home from '../Home/Home';
 
+import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 const App = ({ children }) => {
   const [theme, setTheme] = useState('dark');
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     API.getLoggedIn().then((data) => {
-      if(data.data.logged_in == true) setLoggedIn(true);
+      setUserData({id: data.data.loginId, username: data.data.name});
+
+      if(data.data.loggedIn == true) {
+        setLoggedIn(true);
+      }
       else setLoggedIn(false);
+      //console.log(loginId);
     });
   }, []);
 
@@ -27,7 +34,7 @@ const App = ({ children }) => {
     API.login(user)
     .then(data => {
       setLoggedIn(true);
-      return data;
+      setLoginId(data.data.id);
     })
     .catch(err => {
       return err;
@@ -52,12 +59,12 @@ const App = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ theme }} >
-      <LoginContext.Provider value={{ loggedIn, loginFunc: (user) => login(user), logoutFunc: () => logout(), signupFunc: (user) => signup(user) }}>
+      <LoginContext.Provider value={{ userData, loggedIn, loginFunc: (user) => login(user), logoutFunc: () => logout(), signupFunc: (user) => signup(user) }}>
         <div style={theme == 'dark' ? { height: "100vh", backgroundColor: "#64616d" } : { height: "100vh", backgroundColor: "#b1abc2" }}>
           <Header switchTheme={() => switchTheme()} />
 
           <main className="container">
-            {children}
+            {loggedIn ? children : (<Home/>)}
           </main>
 
           <Footer />

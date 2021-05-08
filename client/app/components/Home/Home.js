@@ -5,6 +5,9 @@ const socket = openSocket();
 
 import LoginContext from '../../utils/LoginContext';
 
+import LoginForm from '../LoginForm/LoginForm';
+import SignupForm from '../SignupForm/SignupForm';
+
 function Home() {
   const { loggedIn, loginFunc, signupFunc } = useContext(LoginContext);
 
@@ -22,9 +25,7 @@ function Home() {
     setLoginData({ ...loginData, [event.target.name]: event.target.value });
   }
 
-  const login = (event) => {
-    event.preventDefault();
-
+  const login = () => {
     if(loginData.username != '' && loginData.password != '') {
       loginFunc(loginData);
       setLoginData({ username: '', password: '' });
@@ -55,74 +56,19 @@ function Home() {
         </div>
       ) : (
         <div>
-          <h1>Log in!</h1>
-          <form onSubmit={(event) => login(event)}>
-            <div className="mb-3">
-              <label htmlFor="username" className="form-label">Username:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="username"
-                aria-describedby="username"
-                name="username"
-                value={loginData.username}
-                onChange={(event) => updateLoginInfo(event)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">Password:</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                value={loginData.password}
-                onChange={(event) => updateLoginInfo(event)}
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
+            <LoginForm 
+              login={(event) => login(event)} 
+              updateLoginInfo={(event) => updateLoginInfo(event)} 
+              loginData={loginData}
+            />
 
           <br />
 
-          <h1>Sign up!</h1>
-          <form onSubmit={(event) => signup(event)}>
-            <div className="mb-3">
-              <label htmlFor="usernamesu" className="form-label">Username:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="usernamesu"
-                aria-describedby="usernamesu"
-                name="username"
-                value={signupData.username}
-                onChange={(event) => updateSignUpData(event)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="passwordsu" className="form-label">Password:</label>
-              <input
-                type="password"
-                className="form-control"
-                id="passwordsu"
-                name="password"
-                value={signupData.password}
-                onChange={(event) => updateSignUpData(event)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="passwordsu2" className="form-label">Password Again:</label>
-              <input
-                type="password"
-                className="form-control"
-                id="passwordsu2"
-                name="password2"
-                value={signupData.password2}
-                onChange={(event) => updateSignUpData(event)}
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
+          <SignupForm 
+            signup={event => signup(event)}
+            updateSignUpData={event => updateSignUpData(event)}
+            signupData={signupData}
+          />
         </div>
       )}
     </>
