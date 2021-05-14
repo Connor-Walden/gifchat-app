@@ -35,10 +35,10 @@ const Profile = () => {
               <div className={theme == 'dark' ? "card bg-dark text-light" : "card bg-light text-dark"}>
                 <div className="card-body">
                   <div className="d-flex flex-column align-items-center text-center">
-                    <img src={profileData.profile_picture} alt="Admin" className="rounded-circle" width="150" />
+                    <img src={profileData ? profileData.profile_picture : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="Admin" className="rounded-circle" width="150" />
                     <div className="mt-3">
                       <h1>{userData.username}</h1>
-                      <p>{profileData.bio}</p>
+                      <p>{profileData ? profileData.bio : ""}</p>
                     </div>
                   </div>
                 </div>
