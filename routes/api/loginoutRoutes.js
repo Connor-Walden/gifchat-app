@@ -2,9 +2,9 @@ const router = require('express').Router();
 const { User } = require('../../models');
 
 router.get('/logged_in', (req, res) => {
-  res.json({ 
+  res.status(200).json({ 
     loggedIn: req.session.logged_in, 
-    loginId: req.session.loginId,
+    loginId: req.session.user_id,
     name: req.session.name
   });
 });
@@ -32,10 +32,9 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      req.session.loginId = userData.id;
       req.session.name = userData.username;
 
-      res.json({ user: userData, message: 'You are now logged in!' });
+      res.status(200).json({ user: userData, message: 'You are now logged in!' });
     });
 
   } catch (err) {

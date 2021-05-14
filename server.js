@@ -11,7 +11,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const sess = {
+app.use(session({
   secret: 'Dc0d3',
   cookie: {},
   resave: false,
@@ -19,9 +19,7 @@ const sess = {
   store: new SequelizeStore({
     db: sequelize
   })
-};
-
-app.use(session(sess));
+}));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
