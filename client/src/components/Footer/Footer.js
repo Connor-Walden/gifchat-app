@@ -23,7 +23,7 @@ const Footer = () => {
   const {theme} = useContext(ThemeContext);
 
   return (
-    <footer className={`footer bg-${theme}`} style={{position: 'fixed', bottom: '0', ...styles.footer}}>
+    <footer className={`footer bg-${theme}`} style={{...styles.footer, position: 'fixed', bottom: '0'}}>
       <div className="container text-center">
         <span className={theme === 'dark' ? `text-light` : 'text-dark'}>Made with &#9829; by Connor Walden</span>
       </div>
