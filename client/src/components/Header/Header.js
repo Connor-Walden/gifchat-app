@@ -24,9 +24,9 @@ const Header = (props) => {
               <li className="nav-item">
                 <Link className="nav-link" aria-current="page" to="/addfriends">Add Friends</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#">Messages</Link>
-              </li>
+              {/* <li className="nav-item">
+                <Link className="nav-link" to="/messages">Messages</Link>
+              </li> */}
               <li className="nav-item">
                 <Link className="nav-link" to="/profile">Profile</Link>
               </li>

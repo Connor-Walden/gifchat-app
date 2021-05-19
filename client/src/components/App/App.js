@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+
+import openSocket from 'socket.io-client';
+const socket = openSocket();
+
 import ThemeContext from '../../utils/ThemeContext';
 import LoginContext from '../../utils/LoginContext';
 import API from '../../utils/API';
 
-import Home from '../Home/Home';
+import Home from '../../pages/Home/Home';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -17,7 +21,9 @@ const App = ({ children }) => {
 
   useEffect(() => {
     api.getLoggedIn().then((data) => {
-      setUserData({id: data.data.loginId, username: data.data.name});
+      api.getUser(data.data.loginId).then(response => {
+        setUserData(response.data[0]);
+      });
 
       if(data.data.loggedIn == true) {
         setLoggedIn(true);

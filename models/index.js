@@ -1,7 +1,6 @@
 const User = require('./User');
 const Profile = require('./Profile');
 const Friendship = require('./Friendship');
-const Conversation = require('./Conversation');
 const Message = require('./Message');
 
 // USER -> PROFILE 1:1
@@ -12,12 +11,8 @@ Profile.belongsTo(User);
 User.hasMany(Friendship);
 Friendship.belongsTo(User, { foreignKey: 'friend_id' });
 
-// FRIENDSHIP -> CONVERSATION 1:1
-Friendship.hasOne(Conversation);
-Conversation.belongsTo(Friendship);
+// USER -> MESSAGE m:m
+User.hasMany(Message);
+Message.belongsTo(User, { foreignKey: 'sender_id' });
 
-// CONVERSATION -> MESSAGE 1:m
-Conversation.hasMany(Message);
-Message.belongsTo(Conversation);
-
-module.exports = { User, Profile, Friendship, Conversation, Message };
+module.exports = { User, Profile, Friendship, Message };

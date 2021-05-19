@@ -21,6 +21,8 @@ const sess = {
   })
 };
 
+let socketMap = {};
+
 app.use(session(sess));
 
 if (process.env.NODE_ENV === "production") {
@@ -40,12 +42,23 @@ sequelize.sync({force: false}).then(() => {
   io.on('connection', function (socket) {
     console.log('a user connected');
 
+    // Gets called when the user logs in on the client
+    socket.on('init', function(userId) {
+      socketMap = { ...socketMap, [userId]: socket.id }
+      console.log('adding a new user to the user id -> socket id map'); 
+      console.log(socketMap);
+    });
+
+    socket.on('get_socketid', function(userId) {
+      socket.emit('get_socketid_from_api', socketMap[userId]);
+    });
+
     socket.on('disconnect', function () {
       console.log('User Disconnected');
     });
 
-    socket.on('example_message', function (msg) {
-      socket.emit('recieve_message', msg);
+    socket.on('message_send', function (userId) {
+      socket.to(socketMap[userId]).emit('recieve_message');
     });
   });
 });

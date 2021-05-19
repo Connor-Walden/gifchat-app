@@ -13,12 +13,20 @@ Message.init(
       primaryKey: true,
       autoIncrement: true
     },
-    conversation_id: {
+    sender_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    reciever_id: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
     message: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    sent_on: {
+      type: DataTypes.DATE,
       allowNull: false
     }
   },

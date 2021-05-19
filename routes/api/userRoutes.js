@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Profile, Friendship } = require('../../models')
+const { User, Profile, Friendship, Message } = require('../../models')
 
 router.post('/users', async (req, res) => {
   try {
@@ -22,7 +22,7 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/users/:id', (req, res) => {
-  User.findAll({ where: { id: req.params.id}})
+  User.findAll({ where: { id: req.params.id}, include: Profile})
   .then(users => {
     res.status(200).json(users);
   });
@@ -54,6 +54,20 @@ router.delete('/friends/:id/:friendId', (req, res) => {
   .then(data => {
     res.status(200).json(data);
   });
+});
+
+router.get('/messages/from/:sender_id/to/:reciever_id', (req, res) => {
+  Message.findAll({ where: { sender_id: req.params.sender_id, reciever_id: req.params.reciever_id } })
+  .then(data => {
+    res.status(200).json(data);
+  })
+}); 
+
+router.post('/messages', (req, res) => {
+  Message.create({...req.body, sent_on: Date.now()})
+  .then(data => {
+    res.status(200).json(data);
+  })
 });
 
 module.exports = router;

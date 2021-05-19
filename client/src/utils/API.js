@@ -1,6 +1,14 @@
 import axios from 'axios';
 
 class API {
+  async getMessages(from, to) {
+    return await axios.get('/api/messages/from/' + from + "/to/" + to);
+  }
+
+  async createMessage(data) {
+    return await axios.post('/api/messages', data);
+  }
+  
   async getFriends(id) {
     return await axios.get('/api/friends/' + id);
   }

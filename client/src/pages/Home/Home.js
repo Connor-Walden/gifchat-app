@@ -1,12 +1,13 @@
 import React, { useEffect, useContext, useState } from 'react';
 import 'whatwg-fetch';
+
 import openSocket from 'socket.io-client';
 const socket = openSocket();
 
 import LoginContext from '../../utils/LoginContext';
 
-import LoginForm from '../LoginForm/LoginForm';
-import SignupForm from '../SignupForm/SignupForm';
+import LoginForm from '../../components/LoginForm/LoginForm';
+import SignupForm from '../../components/SignupForm/SignupForm';
 
 function Home() {
   const { loggedIn, loginFunc, signupFunc } = useContext(LoginContext);

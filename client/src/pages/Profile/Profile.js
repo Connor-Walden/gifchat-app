@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import ThemeContext from '../../utils/ThemeContext';
 import LoginContext from '../../utils/LoginContext';
 import API from '../../utils/API';
+import { Link } from 'react-router-dom';
 
 const api = new API();
 
@@ -18,11 +19,9 @@ const Profile = () => {
     });
 
     api.getFriends(userData.id).then(data => {
-      console.log(data.data);
-
       setFriends(data.data);
     });
-  }, []);
+  }, [userData]);
 
   return (
     <div>
@@ -58,7 +57,7 @@ const Profile = () => {
                                 {friend.user.username}
                               </div>
                               <div className='col-6'>
-                                <button type="button" className="btn btn-primary" style={{ float: "right" }}>Message</button>
+                                <Link className="btn btn-primary" style={{ float: "right" }} to={"/messages/" + friend.user.id}>Message</Link>
                               </div>
                             </div>
                           </li>
