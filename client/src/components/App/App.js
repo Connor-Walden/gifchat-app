@@ -31,7 +31,7 @@ const App = ({ children }) => {
       else setLoggedIn(false);
       //console.log(loginId);
     });
-  }, []);
+  }, [loggedIn]);
 
   const switchTheme = () => {
     if(theme == 'light') setTheme('dark');
@@ -42,7 +42,7 @@ const App = ({ children }) => {
     api.login(user)
     .then(data => {
       setLoggedIn(true);
-      setLoginId(data.data.id);
+      setUserData({ id: data.data.loginId, username: data.data.name });
     })
     .catch(err => {
       return err;

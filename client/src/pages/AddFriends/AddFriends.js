@@ -24,15 +24,13 @@ const AddFriends = () => {
 
     const isFriends = (id) => {
         var isFriend = false;
-
-        friends.forEach(friend => {
-
-            console.log('friend_id: ' + friend.friend_id + ', id: ' + id);
-            if (friend.friend_id === id) {
-                isFriend = true;
-            }
-        });
-
+        if(friends.length > 0) {
+            friends.forEach(friend => {
+                if (friend.friend_id === id) {
+                    isFriend = true;
+                }
+            });
+        }
         return isFriend;
     }
 
