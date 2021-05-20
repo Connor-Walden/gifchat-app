@@ -41,11 +41,7 @@ sequelize.sync({force: false}).then(() => {
     console.log('a user connected');
 
     // Gets called when the user logs in on the client
-    socket.on('init', function(userId) {
-      socketMap = { ...socketMap, [userId]: socket.id }
-      console.log('adding a new user to the user id -> socket id map'); 
-      console.log(socketMap);
-    });
+    socket.on('init', userId => socketMap = { ...socketMap, [userId]: socket.id } );
 
     socket.on('get_socketid', function(userId) {
       socket.emit('get_socketid_from_api', socketMap[userId]);

@@ -1,12 +1,10 @@
 import React from 'react';
 
-import {Link} from 'react-router-dom';
-
 function LoginForm(props) {
   return (
     <div>
       <h1>Log in!</h1>
-      <form>
+      <form onSubmit={(event) => props.login(event)}>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">Username:</label>
           <input
@@ -30,7 +28,7 @@ function LoginForm(props) {
             onChange={(event) => props.updateLoginInfo(event)}
           />
         </div>
-        <Link className="btn btn-primary" to="/" onClick={() => props.login()}>Log In!</Link>
+        <button type="submit" className="btn btn-primary">Log in!</button>
       </form>
     </div>
   );

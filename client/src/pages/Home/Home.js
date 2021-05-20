@@ -1,37 +1,32 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import 'whatwg-fetch';
 
-import openSocket from 'socket.io-client';
-const socket = openSocket();
-
 import LoginContext from '../../utils/LoginContext';
-
-import LoginForm from '../../components/LoginForm/LoginForm';
-import SignupForm from '../../components/SignupForm/SignupForm';
+import Alert from '../../components/Alert/Alert';
+import HomeHero from '../../components/HomeHero/HomeHero';
 
 function Home() {
   const { loggedIn, loginFunc, signupFunc } = useContext(LoginContext);
 
   const [loginData, setLoginData] = useState({ username: '', password: '' });
   const [signupData, setSignupData] = useState({ username: '', password: '', password2: '' });
-
-  useEffect(() => {
-    socket.on('recieve_message', function (msg) {
-      // UPDATE USER MESSAGES
-      console.log(msg);
-    });
-  }, []);
+  const [modalData, setModalData] = useState({ show: 'modal fade', title: '', content: '' });
 
   const updateLoginInfo = (event) => {
     setLoginData({ ...loginData, [event.target.name]: event.target.value });
   }
 
-  const login = () => {
+  const hideModal = () => {
+    setModalData({ show: 'modal fade', title: '', content: '' });
+  }
+
+  const login = (event) => {
+    event.preventDefault();
+
     if(loginData.username != '' && loginData.password != '') {
       loginFunc(loginData);
       setLoginData({ username: '', password: '' });
-    } else {
-      
+      setModalData({ show: 'modal fade show', title: 'Login', content: 'You are now logged in. Close to continue!' });
     }
   }
 
@@ -45,39 +40,24 @@ function Home() {
     if (signupData.username != '' && signupData.password != '' && signupData.password2 != '') {
       console.log(signupFunc(signupData));
       setSignupData({ username: '', password: '', password2: '' });
-    } else {
-
+      setModalData({ show: 'modal fade show', title: 'Signup', content: 'You have now signed up. Close and log in to continue!' });
     }
   }
 
   return (
     <>
-      {loggedIn ? (
-        <div className='container'>
-          <div className='row'>
-            <div className='col-lg-12'>
-              <img src='./assets/logo.gif' style={{width:'100%'}} />
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div>
-            <LoginForm 
-              login={(event) => login(event)} 
-              updateLoginInfo={(event) => updateLoginInfo(event)} 
-              loginData={loginData}
-            />
+      <Alert { ...modalData } closeModalFunc={() => hideModal()} />
+      <HomeHero 
+        loggedIn={loggedIn} 
+        
+        login={(event) => login(event)} 
+        updateLoginInfo={(event) => updateLoginInfo(event)} 
+        loginData={loginData} 
 
-          <br />
-
-          <SignupForm 
-            signup={event => signup(event)}
-            updateSignUpData={event => updateSignUpData(event)}
-            signupData={signupData}
-          />
-          <br />
-        </div>
-      )}
+        signup={(event) => signup(event)} 
+        updateSignUpData={(event) => updateSignUpData(event)} 
+        signupData={signupData} 
+      />
     </>
   );
 }

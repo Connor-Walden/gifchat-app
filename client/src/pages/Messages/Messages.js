@@ -1,6 +1,8 @@
-import { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import openSocket from 'socket.io-client';
 const socket = openSocket();
+
+import ChatBox from '../../components/ChatBox/ChatBox';
 
 import API from '../../utils/API';
 import LoginContext from '../../utils/LoginContext';
@@ -16,12 +18,6 @@ function Messages(props) {
     const { userData } = useContext(LoginContext);
     const { theme } = useContext(ThemeContext);
     const [updates, setUpdates] = useState(0);
-
-    const AlwaysScrollToBottom = () => {
-        const elementRef = useRef();
-        useEffect(() => elementRef.current.scrollIntoView());
-        return <div ref={elementRef} />;
-    };
 
     useEffect(() => {
         socket.emit('init', userData.id);
@@ -82,34 +78,7 @@ function Messages(props) {
                                             <span>To: <span className="name">{recieverData.username}</span></span>
                                         </div>
                                         <div className="chat-container">
-                                            <ul className="chat-box chatContainerScroll">
-                                                {messageList ? messageList.map(message => {
-                                                    if(message.sender_id == userData.id) {
-                                                        return (
-                                                            <li className="chat-left" key={message.id}>
-                                                                <div className="chat-avatar">
-                                                                    <img src={userData.profile.profile_picture} alt="Sender profile picture" />
-                                                                    <div className="chat-name">{userData.username}</div>
-                                                                </div>
-                                                                <div className={theme=='dark' ? "chat-text text-dark bg-secondary" : "chat-text text-light bg-dark"}>{message.message}</div>
-                                                                <div className={theme=='dark' ? "chat-hour text-light" : "chat-hour text-dark"}>{message.sent_on} <span className="fa fa-check-circle"></span></div>
-                                                            </li>
-                                                        );
-                                                    } else if(message.reciever_id == userData.id) {
-                                                        return (
-                                                            <li className="chat-right" key={message.id}>
-                                                                <div className={theme=='dark' ? "chat-hour text-light" : "chat-hour text-dark"}>{message.sent_on} <span className="fa fa-check-circle"></span></div>
-                                                                <div className={theme=='dark' ? "chat-text text-dark bg-secondary" : "chat-text text-light bg-dark"}>{message.message}</div>
-                                                                <div className="chat-avatar">
-                                                                    <img src={recieverData.profile.profile_picture} alt="Reciever profile picture" />
-                                                                    <div className="chat-name">{recieverData.username}</div>
-                                                                </div>
-                                                            </li>
-                                                        );
-                                                    }
-                                                }) : <div></div> }
-                                                <AlwaysScrollToBottom />
-                                            </ul>
+                                            <ChatBox theme={theme} messageList={messageList} userData={userData} recieverData={recieverData} />
                                             <div className="form-group mt-3 mb-0">
                                                 <form onSubmit={(event) => sendMessage(event)}>
                                                     <input type="text" className="form-control" placeholder="Type your message here..." value={userMessage} onChange={(event) => setUserMessage(event.target.value)} />
@@ -124,9 +93,7 @@ function Messages(props) {
                 </div>
             </div>
             ):(
-                <div>
-                    
-                </div>
+                <div></div>
             )}
         </div>
     );
