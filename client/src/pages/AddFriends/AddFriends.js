@@ -33,7 +33,7 @@ const AddFriends = () => {
                     <br />
                     <div className='row gutters-sm d-flex justify-content-center'>
                         <div className='col-md-6'>
-                            <FriendsTable users={users} search={search} friends={friends} userData={userData} />
+                            <FriendsTable users={users} search={search} friends={friends} userData={userData} setFriends={(data) => setFriends(data)} />
                             <br />
                         </div>
                     </div>

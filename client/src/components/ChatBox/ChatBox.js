@@ -14,9 +14,9 @@ function ChatBox({ theme, messageList, userData, recieverData }) {
         <ul className="chat-box chatContainerScroll">
             {messageList ? messageList.map(message => {
                 if(message.sender_id == userData.id) 
-                    return <SentChat theme={theme} userData={userData} message={message} />;
+                    return <SentChat theme={theme} userData={userData} message={message} key={message.id} />;
                 else if(message.reciever_id == userData.id) 
-                    return <RecievedChat theme={theme} recieverData={recieverData} message={message} />;
+                    return <RecievedChat theme={theme} recieverData={recieverData} message={message} key={message.id}/>;
             }) : <div></div> }
             <AlwaysScrollToBottom />
         </ul>

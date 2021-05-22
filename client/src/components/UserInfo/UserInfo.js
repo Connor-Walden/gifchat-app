@@ -1,4 +1,7 @@
-function UserInfo({ user, userData, friends }) {
+import API from '../../utils/API';
+const api = new API();
+
+function UserInfo({ user, userData, friends, setFriends }) {
     const addFriend = (friend_id) => {
         api.createFriendship(userData.id, friend_id).then(data => {
             api.getFriends(userData.id).then(data => setFriends(data.data));

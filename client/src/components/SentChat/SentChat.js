@@ -5,7 +5,7 @@ function SentChat({ theme, userData, message }) {
                 <img src={userData.profile.profile_picture} alt="Sender profile picture" />
                 <div className="chat-name">{userData.username}</div>
             </div>
-            <div className={theme=='dark' ? "chat-text text-dark bg-secondary" : "chat-text text-light bg-dark"}>{message.message}</div>
+            <img className={theme == 'dark' ? "chat-text bg-secondary" : "chat-text bg-dark"} width="250px" src={message.message} style={{ borderRadius: '0', width: '150px', height: '150px' }} />
             <div className={theme=='dark' ? "chat-hour text-light" : "chat-hour text-dark"}>{message.sent_on} <span className="fa fa-check-circle"></span></div>
         </li>
     );
