@@ -43,7 +43,13 @@ function GiphyGrid({ search, userData, recieverData, socket, setUserMessage, upd
           {gifs.length > 0 
           ? gifs.map(gif => {
             return (
-              <img width= "250px" src = { gif.images.fixed_height_small.url } onClick = {() => sendMessage(gif.images.fixed_height_small.url)} key={gif.id}/>
+              <img 
+                width="250px" 
+                src={gif.images.fixed_height_small.url} 
+                onClick={() => sendMessage(gif.images.fixed_height_small.url)} 
+                key={gif.id} 
+                loading="lazy" 
+              />
             );
           }) 
           : <></>}
