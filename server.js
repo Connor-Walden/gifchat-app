@@ -1,4 +1,6 @@
 const express = require('express');
+const helmet = require('helmet');
+
 const path = require('path');
 const sequelize = require('./config');
 const session = require('express-session');
@@ -10,6 +12,8 @@ const port  = process.env.PORT || 3001;
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(helmet());
 
 app.use(session({
   secret: 'Dc0d3',
