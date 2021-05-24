@@ -18,7 +18,6 @@ render((
       <Route exact path="/profile" component={Profile} />
       <Route exact path='/addfriends' component={AddFriends} />
       <Route exact path="/messages/:id" render={(props) => <Messages {...props} />}/>
-      <Route path="*" component={Home}/>
     </App>
   </Router>
 ), document.getElementById('app'));
