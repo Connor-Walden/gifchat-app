@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import App from './components/App/App';
 
@@ -14,13 +14,11 @@ import './styles/normalize.css';
 render((
   <Router>
     <App>
-      <Switch>
-        <Route exact path="/" component={Home}/>
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path='/addfriends' component={AddFriends} />
-        <Route exact path="/messages/:id" render={(props) => <Messages {...props} />}/>
-        <Route path="*" component={Home}/>
-      </Switch>
+      <Route exact path="/" component={Home}/>
+      <Route exact path="/profile" component={Profile} />
+      <Route exact path='/addfriends' component={AddFriends} />
+      <Route exact path="/messages/:id" render={(props) => <Messages {...props} />}/>
+      <Route path="*" component={Home}/>
     </App>
   </Router>
 ), document.getElementById('app'));
