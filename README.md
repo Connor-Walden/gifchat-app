@@ -8,14 +8,20 @@ A gif-powered instant messenger
 
 ## Table of contents
 1. [License](#license)
-2. [Deployed Url](#deployedUrl)
-3. [Questions](#questions)
+2. [Deployed Url](#deployed Url)
+3. [Built With](#built With)
+4. [Questions](#questions)
 
 ## License
 MIT
 
 ## Deployed Url
 https://fathomless-beyond-02157.herokuapp.com/
+
+## Built With
+- Nodejs
+- Reactjs
+- Bootstrap
 
 ## Questions
 If you have any questions, please forward them to Connor-Walden at connormwalden@gmail.com
